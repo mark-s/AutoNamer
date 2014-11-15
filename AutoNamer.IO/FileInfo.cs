@@ -1,5 +1,4 @@
-﻿using System.CodeDom;
-using PropertyChanged;
+﻿using PropertyChanged;
 
 namespace AutoNamer.IO
 {
@@ -7,18 +6,20 @@ namespace AutoNamer.IO
     [ImplementPropertyChanged]
     public class FileInfo
     {
-        public string Path { get; set; }
+        public string FilePath { get; set; }
         public string FileName { get; set; }
-
         public string FileExtension { get; set; }
+        public string CompleteFileName { get; private set; }
 
         internal FileInfo() { }
 
-        internal FileInfo(string path, string filename, string fileExtension)
+        internal FileInfo(string filePath, string filename, string fileExtension,string fullPath)
         {
-            Path = path;
+            FilePath = filePath;
             FileName = filename;
             FileExtension = fileExtension;
+            CompleteFileName = fullPath;
+
         }
     }
 }

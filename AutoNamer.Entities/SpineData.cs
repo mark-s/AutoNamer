@@ -9,5 +9,11 @@ namespace AutoNamer.Entities
         public string Author { get; set; }
 
         internal SpineData() { }
+
+        internal SpineData(string title, string author)
+        {
+            Title = title;
+            Author = author;
+        }
     }
 }

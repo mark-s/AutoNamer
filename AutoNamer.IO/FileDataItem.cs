@@ -12,10 +12,10 @@ namespace AutoNamer.IO
         public FileInfo Current{ get; private set; }
         public FileInfo Requested { get; private set; }
 
-        public FileDataItem(string path, string fileName, string fileExtension)
+        public FileDataItem(string path, string fileName, string fileExtension, string fullPath)
         {
             ID = _id++;
-            Current = new FileInfo(path, fileName, fileExtension);
+            Current = new FileInfo(path, fileName, fileExtension, fullPath);
             Requested = new FileInfo();
         }
     }

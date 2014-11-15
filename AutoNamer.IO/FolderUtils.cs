@@ -18,7 +18,7 @@ namespace AutoNamer.IO
                 var filePath = Path.GetDirectoryName(file);
                 var fileName = Path.GetFileNameWithoutExtension(file);
                 var fileType = Path.GetExtension(file);
-                foundFiles.Add(new FileDataItem(filePath, fileName, fileType));
+                foundFiles.Add(new FileDataItem(filePath, fileName, fileType, file));
             }
 
             return foundFiles;

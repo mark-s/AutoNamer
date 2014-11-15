@@ -58,7 +58,7 @@ namespace AutoNamer.IO.Tests
             // Assert
             var firstBook = books.First();
 
-            firstBook.Current.FileExtension.Should().Be("epub");
+            firstBook.Current.FileExtension.Should().Be(".epub");
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace AutoNamer.IO.Tests
             // Assert
             var firstBook = books.First();
 
-            firstBook.Current.FileExtension.Should().Be("Books");
+            firstBook.Current.FilePath.Should().Be("Books");
         }
 
 
