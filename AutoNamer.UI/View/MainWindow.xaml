@@ -3,16 +3,60 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Title="ePub Auto Namer"
-                      Width="525"
-                      Height="350"
+                      Width="720"
+                      Height="543"
                       BorderBrush="{DynamicResource AccentColorBrush}"
                       BorderThickness="1"
                       DataContext="{Binding Main,
                                             Source={StaticResource Locator}}"
                       ResizeMode="CanResizeWithGrip"
-                      TitleCaps="False"
-                      UseLayoutRounding="True"
                       SaveWindowPosition="True"
-                      SnapsToDevicePixels="True">
-    <Grid />
+                      SnapsToDevicePixels="True"
+                      TitleCaps="False"
+                      UseLayoutRounding="True">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="41*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+
+            <Button Width="100"
+                    Height="30"
+                    Margin="10,0,0,0"
+                    Command="{Binding ShowFolderChoice}"
+                    Content="Chose Folder" />
+
+            <TextBlock Margin="20,15,0,10"
+                       HorizontalAlignment="Stretch"
+                       Text="{Binding SelectedFolder}" />
+
+        </StackPanel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <ListBox Grid.Row="1"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center" />
+
+
+    </Grid>
 </Controls:MetroWindow>

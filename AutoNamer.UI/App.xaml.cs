@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using AutoNamer.UI.ViewModel;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace AutoNamer.UI
 {
@@ -13,5 +9,9 @@ namespace AutoNamer.UI
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            SimpleIoc.Default.Register<IFileHelpers, FileHelpers>();
+        }
     }
 }

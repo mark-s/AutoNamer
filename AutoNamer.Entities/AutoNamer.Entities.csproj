@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C50741D6-0247-4E3E-A127-F14637EAC122}</ProjectGuid>
+    <ProjectGuid>{4194D9AF-9582-4859-B196-D2A92E144356}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoNamer.IO</RootNamespace>
-    <AssemblyName>AutoNamer.IO</AssemblyName>
+    <RootNamespace>AutoNamer.Entities</RootNamespace>
+    <AssemblyName>AutoNamer.Entities</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>f937d13a</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>7bcf0cd9</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,17 +37,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileDataItem.cs" />
-    <Compile Include="FileInfo.cs" />
-    <Compile Include="FolderUtils.cs" />
+    <Compile Include="BookDataItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpineData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />

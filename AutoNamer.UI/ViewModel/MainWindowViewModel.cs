@@ -1,28 +1,33 @@
+using System.Collections.Generic;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
+using PropertyChanged;
 
 namespace AutoNamer.UI.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
+    
+    [ImplementPropertyChanged]
     public class MainWindowViewModel : ViewModelBase
     {
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
-        public MainWindowViewModel()
+        public string SelectedFolder { get; private set; }
+
+        public RelayCommand ShowFolderChoice { get; private set; }
+
+        public List<Book> Books { get; set; }    
+
+        public MainWindowViewModel(IFileHelpers fileHelpers)
         {
             SimpleIoc.Default.Register<MainWindowViewModel>();
+
+            fileHelpers.SelectedFolderChanged += (o, args) => SelectedFolder = args.SelectedFolder;
+            
+            Books = new List<Book>();
+
+            ShowFolderChoice = new RelayCommand(fileHelpers.OpenFolder, () => true);
+
         }
+
+
     }
 }

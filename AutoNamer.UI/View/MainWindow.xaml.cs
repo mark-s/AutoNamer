@@ -11,5 +11,6 @@ namespace AutoNamer.UI.View
         {
             InitializeComponent();
         }
+
     }
 }
