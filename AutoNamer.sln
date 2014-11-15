@@ -3,7 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNamer.UI", "AutoNamer.UI\AutoNamer.UI.csproj", "{450FDF16-CEB0-4CA3-9588-D5FE3029572D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNamer.Epub", "AutoNamer.Epub\AutoNamer.Epub.csproj", "{62E21AFE-2366-40E3-B6C3-B6C19CD41AE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNamer.IO", "AutoNamer.IO\AutoNamer.IO.csproj", "{C50741D6-0247-4E3E-A127-F14637EAC122}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{450FDF16-CEB0-4CA3-9588-D5FE3029572D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{450FDF16-CEB0-4CA3-9588-D5FE3029572D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{450FDF16-CEB0-4CA3-9588-D5FE3029572D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{450FDF16-CEB0-4CA3-9588-D5FE3029572D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62E21AFE-2366-40E3-B6C3-B6C19CD41AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62E21AFE-2366-40E3-B6C3-B6C19CD41AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62E21AFE-2366-40E3-B6C3-B6C19CD41AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62E21AFE-2366-40E3-B6C3-B6C19CD41AE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C50741D6-0247-4E3E-A127-F14637EAC122}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C50741D6-0247-4E3E-A127-F14637EAC122}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C50741D6-0247-4E3E-A127-F14637EAC122}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C50741D6-0247-4E3E-A127-F14637EAC122}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
