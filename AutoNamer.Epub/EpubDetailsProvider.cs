@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using AutoNamer.Entities;
 
 namespace AutoNamer.Epub
@@ -13,58 +15,76 @@ namespace AutoNamer.Epub
         // TODO: Regex may or may not be the fastest way of doing this ...
         private readonly Regex _regexAuthor;
         private readonly Regex _regexTitle;
-        private const string AUTHOR = @"<.*creator.*>(.*)</.*creator>";
-        private const string TITLE = @"<.*title>(.*)</.*title>";
+        private const string AUTHOR = @"<.{1,3}:creator>(.*)</.{1,3}:creator>";
+        private const string TITLE = @"<.{1,3}:title>(.*)</.{1,3}:title>";
 
         public EpubDetailsProvider()
         {
-            _regexAuthor = new Regex(AUTHOR, RegexOptions.IgnoreCase | RegexOptions.Compiled );
-            _regexTitle = new Regex(TITLE, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            _regexAuthor = new Regex(AUTHOR, RegexOptions.IgnoreCase | RegexOptions.Compiled,TimeSpan.FromSeconds(1));
+            _regexTitle = new Regex(TITLE, RegexOptions.IgnoreCase | RegexOptions.Compiled, TimeSpan.FromSeconds(1));
         }
 
-        public BookDataItem GetBookData(string fullFileName)
+        public async Task<BookDataItem> GetBookData(string fullFileName)
         {
             var bookData = BookDataItem.EmptyBookData;
 
-            string opfFileText;
-            if (TryGetOPFFileContents(fullFileName, out opfFileText))
+            var opfFileText = await GetOPFFileContents(fullFileName);
+
+            
+
+            if (string.IsNullOrEmpty(opfFileText) == false)
             {
-                bookData = new BookDataItem(GetTitle(opfFileText), GetAuthor(opfFileText));
+                var title = await GetTitle(opfFileText);
+                var author = await GetAuthor(opfFileText);
+                bookData = new BookDataItem(title, author);
             }
 
             return bookData;
         }
 
 
-        private bool TryGetOPFFileContents(string fullFileName, out string fileContents)
+        private async Task<string> GetOPFFileContents(string fullFileName)
         {
-            fileContents = null;
+            string fileContents = "";
 
-            using (var archive = ZipFile.Open(fullFileName, ZipArchiveMode.Read))
+            try
             {
-                var theOpfFile = archive.Entries.FirstOrDefault(entry => entry.FullName.EndsWith(".opf", StringComparison.OrdinalIgnoreCase));
+                using (var archive = ZipFile.Open(fullFileName, ZipArchiveMode.Read))
+                {
+                    Debug.WriteLine(fullFileName);
+                    var theOpfFile = archive.Entries.FirstOrDefault(entry => entry.FullName.EndsWith(".opf", StringComparison.OrdinalIgnoreCase));
 
-                if (theOpfFile != null)
-                    using (var reader = new StreamReader(theOpfFile.Open()))
-                    {
-                    // TODO: Make this use a) the Async version and b) only read in the first 20 or so lines for speed
-                        fileContents = reader.ReadToEnd();
-                    }
+                    if (theOpfFile != null)
+                        using (var reader = new StreamReader(theOpfFile.Open()))
+                        {
+                                fileContents += await reader.ReadToEndAsync();
+                        }
+                }
+            }
+            catch (InvalidDataException ex)
+            {
+                Debug.WriteLine(ex.Message);
             }
 
-            return !String.IsNullOrEmpty(fileContents);
+            return fileContents;
         }
 
-        private string GetAuthor(string opfText)
+        private async Task<string> GetAuthor(string opfText)
         {
-            var authorMatch = _regexAuthor.Match(opfText);
-            return authorMatch.Success ? authorMatch.Groups[1].Value : String.Empty;
+            return await Task<string>.Factory.StartNew(() =>
+                                   {
+                                       var authorMatch = _regexAuthor.Match(opfText);
+                                       return authorMatch.Success ? authorMatch.Groups[1].Value : String.Empty;
+                                   });
         }
 
-        private string GetTitle(string opfText)
+        private async Task<string> GetTitle(string opfText)
         {
-            var titleMatch = _regexTitle.Match(opfText);
-            return titleMatch.Success ? titleMatch.Groups[1].Value : String.Empty;
+            return await Task<string>.Factory.StartNew(() =>
+                                {
+                                    var titleMatch = _regexTitle.Match(opfText);
+                                    return titleMatch.Success ? titleMatch.Groups[1].Value : String.Empty;
+                                });
         }
 
     }

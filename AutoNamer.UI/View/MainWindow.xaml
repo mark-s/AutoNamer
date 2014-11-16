@@ -2,7 +2,6 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      xmlns:local="clr-namespace:AutoNamer.UI.Model"
                       Title="ePub Auto Namer"
                       Width="720"
                       Height="543"
@@ -34,12 +33,8 @@
                     Command="{Binding ShowFolderChoice}"
                     Content="Select Folder" />
 
+
         </StackPanel>
-
-
-
-
-
 
 
 
@@ -53,12 +48,15 @@
                   ItemsSource="{Binding Books}"
                   SelectionMode="Extended">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="1*"
+                <DataGridTextColumn Width="2*"
                                     Binding="{Binding FileData.Current.FileName}"
-                                    Header="Current" />
+                                    Header="Filename" />
+                <DataGridTextColumn Width="2*"
+                                    Binding="{Binding BookData.Current.Title}"
+                                    Header="New Filename" />
                 <DataGridTextColumn Width="1*"
-                                    Binding="{Binding FileData.Proposed.FileName}"
-                                    Header="New" />
+                                    Binding="{Binding BookData.Current.Author}"
+                                    Header="Author" />
             </DataGrid.Columns>
 
         </DataGrid>

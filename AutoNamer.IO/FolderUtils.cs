@@ -16,7 +16,7 @@ namespace AutoNamer.IO
 
             var foundFiles = new List<FileDataItem>();
 
-            foreach (var file in Directory.GetFiles(path, fileExtension))
+            foreach (var file in Directory.GetFiles(path, fileExtension,SearchOption.AllDirectories))
             {
                 var filePath = Path.GetDirectoryName(file);
                 var fileName = Path.GetFileNameWithoutExtension(file);

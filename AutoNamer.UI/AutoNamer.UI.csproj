@@ -120,6 +120,10 @@
       <Project>{4194d9af-9582-4859-b196-d2a92e144356}</Project>
       <Name>AutoNamer.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AutoNamer.Epub\AutoNamer.Epub.csproj">
+      <Project>{62E21AFE-2366-40E3-B6C3-B6C19CD41AE2}</Project>
+      <Name>AutoNamer.Epub</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoNamer.IO\AutoNamer.IO.csproj">
       <Project>{c50741d6-0247-4e3e-a127-f14637eac122}</Project>
       <Name>AutoNamer.IO</Name>

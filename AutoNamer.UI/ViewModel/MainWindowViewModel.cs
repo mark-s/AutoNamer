@@ -21,29 +21,31 @@ namespace AutoNamer.UI.ViewModel
 
         public MainWindowViewModel(IFileHelpers fileHelpers)
         {
-            _fileHelpers = fileHelpers;
             SimpleIoc.Default.Register<MainWindowViewModel>();
 
+            _fileHelpers = fileHelpers;
+            
             Books = new ObservableCollection<Book>();
 
-            ShowFolderChoice = new RelayCommand(() => HandleFolderChoice(), () => true);
-
+            ShowFolderChoice = new RelayCommand(HandleFolderChoice, () => true);
         }
 
         private void HandleFolderChoice()
         {
             _fileHelpers.OpenFolder();
             _fileHelpers.LoadFolderBookList(_fileHelpers.SelectedFolder);
+
             AssignBooks(_fileHelpers.BooksInFolder);
         }
 
-        private void AssignBooks(IEnumerable<FileDataItem> booksInFolder)
+        private async void AssignBooks(IEnumerable<FileDataItem> booksInFolder)
         {
             Books.Clear();
+
             foreach (var item in booksInFolder)
             {
-                Books.Add(new Book(item,null));
-                Debug.WriteLine(item.Current.FileName);
+                var bookData = await _fileHelpers.GetBookData(item);
+                Books.Add(new Book(item,bookData));
             }
         }
     }

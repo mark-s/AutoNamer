@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using AutoNamer.Entities;
+using AutoNamer.Epub;
 using AutoNamer.IO;
 
 namespace AutoNamer.UI.ViewModel
@@ -13,6 +16,7 @@ namespace AutoNamer.UI.ViewModel
 
         void OpenFolder();
         void LoadFolderBookList(string path);
+        Task<BookDataItem> GetBookData(FileDataItem file);
     }
 
     public class FileHelpers : IFileHelpers
@@ -22,11 +26,13 @@ namespace AutoNamer.UI.ViewModel
         public String SelectedFolder { get; private set; }
 
         private readonly IFolderUtils _folderUtils;
+        private readonly IBookDetailsProvider _bookDetailsProvider;
 
 
-        public FileHelpers(IFolderUtils folderUtils)
+        public FileHelpers(IFolderUtils folderUtils, IBookDetailsProvider bookDetailsProvider)
         {
             _folderUtils = folderUtils;
+            _bookDetailsProvider = bookDetailsProvider;
             BooksInFolder = new List<FileDataItem>();
         }
 
@@ -50,6 +56,12 @@ namespace AutoNamer.UI.ViewModel
         {
             BooksInFolder.Clear();
             BooksInFolder.AddRange(_folderUtils.GetBooksFromFolder(path));
+        }
+
+        public async Task<BookDataItem> GetBookData(FileDataItem file)
+        {
+            return await _bookDetailsProvider.GetBookData(file.Current.CompleteFileName);
+
         }
 
 

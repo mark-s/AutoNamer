@@ -16,19 +16,19 @@ namespace AutoNamer.Epub.Tests
 
 
         [Test]
-        public void GetBookData_GoodBook_ReturnsAuthor()
+        public async void GetBookData_GoodBook_ReturnsAuthor()
         {
-            var bookData =_epubDetailsProvider.GetBookData("pg11.epub");
+             var bookData = await _epubDetailsProvider.GetBookData("pg11.epub");
 
-            bookData.Current.Author.Should().Be("Lewis Carroll");
+             bookData.Current.Author.Should().Be("Lewis Carroll");
 
         }
 
 
         [Test]
-        public void GetBookData_GoodBook_ReturnsTitle()
+        public async void GetBookData_GoodBook_ReturnsTitle()
         {
-            var bookData = _epubDetailsProvider.GetBookData("pg11.epub");
+            var bookData = await _epubDetailsProvider.GetBookData("pg11.epub");
 
             bookData.Current.Title.Should().Be("Alice's Adventures in Wonderland");
         }
