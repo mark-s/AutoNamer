@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using AutoNamer.IO;
 using AutoNamer.UI.ViewModel;
 using GalaSoft.MvvmLight.Ioc;
 
@@ -12,6 +13,8 @@ namespace AutoNamer.UI
         public App()
         {
             SimpleIoc.Default.Register<IFileHelpers, FileHelpers>();
+            SimpleIoc.Default.Register<IFolderUtils, FolderUtils>();
+            
         }
     }
 }

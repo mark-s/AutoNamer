@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using AutoNamer.IO;
 using AutoNamer.UI.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -11,24 +14,37 @@ namespace AutoNamer.UI.ViewModel
     [ImplementPropertyChanged]
     public class MainWindowViewModel : ViewModelBase
     {
-        public string SelectedFolder { get; private set; }
-
+        private readonly IFileHelpers _fileHelpers;
         public RelayCommand ShowFolderChoice { get; private set; }
 
-        public List<Book> Books { get; set; }    
+        public ObservableCollection<Book> Books { get; private set; }    
 
         public MainWindowViewModel(IFileHelpers fileHelpers)
         {
+            _fileHelpers = fileHelpers;
             SimpleIoc.Default.Register<MainWindowViewModel>();
 
-            fileHelpers.SelectedFolderChanged += (o, args) => SelectedFolder = args.SelectedFolder;
-            
-            Books = new List<Book>();
+            Books = new ObservableCollection<Book>();
 
-            ShowFolderChoice = new RelayCommand(fileHelpers.OpenFolder, () => true);
+            ShowFolderChoice = new RelayCommand(() => HandleFolderChoice(), () => true);
 
         }
 
+        private void HandleFolderChoice()
+        {
+            _fileHelpers.OpenFolder();
+            _fileHelpers.LoadFolderBookList(_fileHelpers.SelectedFolder);
+            AssignBooks(_fileHelpers.BooksInFolder);
+        }
 
+        private void AssignBooks(IEnumerable<FileDataItem> booksInFolder)
+        {
+            Books.Clear();
+            foreach (var item in booksInFolder)
+            {
+                Books.Add(new Book(item,null));
+                Debug.WriteLine(item.Current.FileName);
+            }
+        }
     }
 }

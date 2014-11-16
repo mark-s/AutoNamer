@@ -1,14 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using AutoNamer.Entities;
 
 namespace AutoNamer.IO
 {
-    public class FolderUtils
+    public interface IFolderUtils
     {
+        List<FileDataItem> GetBooksFromFolder(string path, string fileExtension = BookFileTypeExtensions.EPUB);
+    }
 
-        private const string EPUB_EXTENSION = "*.epub";
-
-        public List<FileDataItem> GetBooksFromFolder(string path, string fileExtension = EPUB_EXTENSION)
+    public class FolderUtils : IFolderUtils
+    {
+        public List<FileDataItem> GetBooksFromFolder(string path, string fileExtension = BookFileTypeExtensions.EPUB)
         {
 
             var foundFiles = new List<FileDataItem>();

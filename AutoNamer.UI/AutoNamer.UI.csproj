@@ -41,9 +41,6 @@
     <Reference Include="GalaSoft.MvvmLight.Extras">
       <HintPath>..\packages\MvvmLightLibs.5.0.2.0\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Platform">
-      <HintPath>..\packages\MvvmLightLibs.5.0.2.0\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
-    </Reference>
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.14.0.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -55,16 +52,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.0.14.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -129,10 +119,6 @@
     <ProjectReference Include="..\AutoNamer.Entities\AutoNamer.Entities.csproj">
       <Project>{4194d9af-9582-4859-b196-d2a92e144356}</Project>
       <Name>AutoNamer.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoNamer.Epub\AutoNamer.Epub.csproj">
-      <Project>{62e21afe-2366-40e3-b6c3-b6c19cd41ae2}</Project>
-      <Name>AutoNamer.Epub</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoNamer.IO\AutoNamer.IO.csproj">
       <Project>{c50741d6-0247-4e3e-a127-f14637eac122}</Project>
