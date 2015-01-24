@@ -16,7 +16,7 @@ namespace AutoNamer.Epub
         private readonly Regex _regexAuthor;
         private readonly Regex _regexTitle;
         private const string AUTHOR = @"<.{1,3}:creator>(.*)</.{1,3}:creator>";
-        private const string TITLE = @"<.{1,3}:title>(.*)</.{1,3}:title>";
+        private const string TITLE = @"<.{1,3}:title.{0,10}>(.*)</.{1,3}:title>";
 
         public EpubDetailsProvider()
         {
@@ -30,13 +30,11 @@ namespace AutoNamer.Epub
 
             var opfFileText = await GetOPFFileContents(fullFileName);
 
-            
-
             if (string.IsNullOrEmpty(opfFileText) == false)
             {
                 var title = await GetTitle(opfFileText);
                 var author = await GetAuthor(opfFileText);
-                bookData = new BookDataItem(title, author);
+                bookData = new BookDataItem(title, author, opfFileText);
             }
 
             return bookData;
@@ -72,19 +70,23 @@ namespace AutoNamer.Epub
         private async Task<string> GetAuthor(string opfText)
         {
             return await Task<string>.Factory.StartNew(() =>
-                                   {
-                                       var authorMatch = _regexAuthor.Match(opfText);
-                                       return authorMatch.Success ? authorMatch.Groups[1].Value : String.Empty;
-                                   });
+            {
+                var authorMatch = _regexAuthor.Match(opfText);
+                if (authorMatch.Success) return authorMatch.Groups[1].Value;
+                else 
+                    return String.Empty;
+            });
         }
 
         private async Task<string> GetTitle(string opfText)
         {
             return await Task<string>.Factory.StartNew(() =>
-                                {
-                                    var titleMatch = _regexTitle.Match(opfText);
-                                    return titleMatch.Success ? titleMatch.Groups[1].Value : String.Empty;
-                                });
+            {
+                var titleMatch = _regexTitle.Match(opfText);
+                if (titleMatch.Success) return titleMatch.Groups[1].Value;
+                else 
+                    return String.Empty;
+            });
         }
 
     }
