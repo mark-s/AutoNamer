@@ -8,17 +8,6 @@ using AutoNamer.IO;
 
 namespace AutoNamer.UI.ViewModel
 {
-
-    public interface IFileHelpers
-    {
-        String SelectedFolder { get; }
-        List<FileDataItem> BooksInFolder { get; }
-
-        void OpenFolder();
-        void LoadFolderBookList(string path);
-        Task<BookDataItem> GetBookData(FileDataItem file);
-    }
-
     public class FileHelpers : IFileHelpers
     {
 

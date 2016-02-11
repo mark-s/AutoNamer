@@ -17,7 +17,7 @@ namespace AutoNamer.UI.ViewModel
         private readonly IFileHelpers _fileHelpers;
         public RelayCommand ShowFolderChoice { get; private set; }
 
-        public ObservableCollection<Book> Books { get; private set; }    
+        public ObservableCollection<Book> Books { get; }    
 
         public MainWindowViewModel(IFileHelpers fileHelpers)
         {

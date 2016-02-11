@@ -15,8 +15,8 @@ namespace AutoNamer.Epub
         // TODO: Regex may or may not be the fastest way of doing this ...
         private readonly Regex _regexAuthor;
         private readonly Regex _regexTitle;
-        private const string AUTHOR = @"<.{1,3}:creator>(.*)</.{1,3}:creator>";
-        private const string TITLE = @"<.{1,3}:title.{0,10}>(.*)</.{1,3}:title>";
+        private const string AUTHOR = @"<.{0,30}:creator.{0,150}>(.+)<\/.{0,10}:creator>";
+        private const string TITLE = @"<.{0,30}:title.{0,30}>(.+)<\/.{0,30}:title>";
 
         public EpubDetailsProvider()
         {
@@ -74,7 +74,7 @@ namespace AutoNamer.Epub
                 var authorMatch = _regexAuthor.Match(opfText);
                 if (authorMatch.Success) return authorMatch.Groups[1].Value;
                 else 
-                    return String.Empty;
+                    return string.Empty;
             });
         }
 
@@ -85,7 +85,7 @@ namespace AutoNamer.Epub
                 var titleMatch = _regexTitle.Match(opfText);
                 if (titleMatch.Success) return titleMatch.Groups[1].Value;
                 else 
-                    return String.Empty;
+                    return string.Empty;
             });
         }
 

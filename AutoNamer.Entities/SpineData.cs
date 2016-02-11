@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using System.CodeDom;
+using PropertyChanged;
 
 namespace AutoNamer.Entities
 {
@@ -12,8 +13,18 @@ namespace AutoNamer.Entities
 
         internal SpineData(string title, string author)
         {
-            Title = title;
+            Title = RemoveHtmlChars(title);
             Author = author;
         }
+
+
+        private string RemoveHtmlChars(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return text;
+
+            return text.Replace("&amp;","&");
+
+        }
+
     }
 }

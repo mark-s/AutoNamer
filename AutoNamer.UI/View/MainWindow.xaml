@@ -49,7 +49,7 @@
                   SelectionMode="Extended">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="2*"
-                                    Binding="{Binding FileData.Current.FileName}"
+                                    Binding="{Binding FileData.Current.FileName, Mode=OneTime}"
                                     Header="Filename" />
                 <DataGridTextColumn Width="2*"
                                     Binding="{Binding BookData.Current.Title}"
