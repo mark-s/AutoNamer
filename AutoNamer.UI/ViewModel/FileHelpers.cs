@@ -11,8 +11,8 @@ namespace AutoNamer.UI.ViewModel
     public class FileHelpers : IFileHelpers
     {
 
-        public List<FileDataItem> BooksInFolder { get; private set; }
-        public String SelectedFolder { get; private set; }
+        public List<FileDataItem> BooksInFolder { get; }
+        public string SelectedFolder { get; private set; }
 
         private readonly IFolderUtils _folderUtils;
         private readonly IBookDetailsProvider _bookDetailsProvider;
@@ -25,24 +25,28 @@ namespace AutoNamer.UI.ViewModel
             BooksInFolder = new List<FileDataItem>();
         }
 
-        public void OpenFolder()
+        public DialogResult OpenFolder()
         {
+            DialogResult dialogResult;
+
             using (var folderDialog = new FolderBrowserDialog())
             {
                 folderDialog.ShowNewFolderButton = false;
                 folderDialog.Description = "Please select a folder containing the ePubs to Rename";
 
-                var result = folderDialog.ShowDialog();
+                dialogResult = folderDialog.ShowDialog();
 
-                if (result == DialogResult.OK)
-                {
+                if (dialogResult == DialogResult.OK)
                     SelectedFolder = folderDialog.SelectedPath;
-                }
             }
+
+            return dialogResult;
         }
 
         public void LoadFolderBookList(string path)
         {
+            if (string.IsNullOrEmpty(path)) return;
+
             BooksInFolder.Clear();
             BooksInFolder.AddRange(_folderUtils.GetBooksFromFolder(path));
         }

@@ -14,6 +14,7 @@ namespace AutoNamer.IO
         public List<FileDataItem> GetBooksFromFolder(string path, string fileExtension = BookFileTypeExtensions.EPUB)
         {
 
+
             var foundFiles = new List<FileDataItem>();
 
             foreach (var file in Directory.GetFiles(path, fileExtension,SearchOption.AllDirectories))

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Windows.Forms;
 using AutoNamer.IO;
 using AutoNamer.UI.Model;
 using GalaSoft.MvvmLight;
@@ -32,7 +33,11 @@ namespace AutoNamer.UI.ViewModel
 
         private void HandleFolderChoice()
         {
-            _fileHelpers.OpenFolder();
+            // Show the open folder dialog
+            var dialogResult =_fileHelpers.OpenFolder();
+
+            if (dialogResult != DialogResult.OK) return;
+            
             _fileHelpers.LoadFolderBookList(_fileHelpers.SelectedFolder);
 
             AssignBooks(_fileHelpers.BooksInFolder);

@@ -27,7 +27,7 @@
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
 
-            <Button Width="100"
+            <Button
                     Height="30"
                     Margin="10,0,0,0"
                     Command="{Binding ShowFolderChoice}"
@@ -48,6 +48,8 @@
                   ItemsSource="{Binding Books}"
                   SelectionMode="Extended">
             <DataGrid.Columns>
+                <DataGridCheckBoxColumn Binding="{Binding Selected}" />
+                
                 <DataGridTextColumn Width="2*"
                                     Binding="{Binding FileData.Current.FileName, Mode=OneTime}"
                                     Header="Filename" />

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using AutoNamer.Entities;
 using AutoNamer.IO;
 
@@ -9,7 +10,7 @@ namespace AutoNamer.UI.ViewModel
     {
         string SelectedFolder { get; }
         List<FileDataItem> BooksInFolder { get; }
-        void OpenFolder();
+        DialogResult OpenFolder();
         void LoadFolderBookList(string path);
         Task<BookDataItem> GetBookData(FileDataItem file);
     }

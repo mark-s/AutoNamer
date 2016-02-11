@@ -8,7 +8,6 @@ namespace AutoNamer.Entities
         public static BookDataItem EmptyBookData = new BookDataItem("Unknown", "Unknown", string.Empty);
         public SpineData Current { get; private set; }
         public SpineData Proposed { get; private set; }
-
         public string RawData { get; private set; }
 
         public BookDataItem(string title, string author, string rawData)
