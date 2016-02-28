@@ -8,7 +8,7 @@
                       BorderBrush="{DynamicResource AccentColorBrush}"
                       BorderThickness="1"
                       DataContext="{Binding Main,
-                                            Source={StaticResource Locator}}"
+                      Source={StaticResource Locator}}"
                       ResizeMode="CanResizeWithGrip"
                       SaveWindowPosition="True"
                       SnapsToDevicePixels="True"
@@ -28,16 +28,13 @@
         <StackPanel Grid.Row="0" Orientation="Horizontal">
 
             <Button
-                    Height="30"
-                    Margin="10,0,0,0"
-                    Command="{Binding ShowFolderChoice}"
-                    Content="Select Folder" />
+                Height="30"
+                Margin="10,0,0,0"
+                Command="{Binding ShowFolderChoice}"
+                Content="Select Folder" />
 
 
         </StackPanel>
-
-
-
 
 
 
@@ -47,18 +44,33 @@
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding Books}"
                   SelectionMode="Extended">
+            
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Binding="{Binding Selected}" />
                 
+                <DataGridCheckBoxColumn Binding="{Binding Selected}">
+                    <DataGridCheckBoxColumn.CellStyle>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=SavedOk}" Value="True">
+                                <Setter Property="Background" Value="LawnGreen" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridCheckBoxColumn.CellStyle>
+                </DataGridCheckBoxColumn>
+
                 <DataGridTextColumn Width="2*"
-                                    Binding="{Binding FileData.Current.FileName, Mode=OneTime}"
+                                    Binding="{Binding FileName, Mode=OneTime}"
                                     Header="Filename" />
-                <DataGridTextColumn Width="2*"
-                                    Binding="{Binding BookData.Current.Title}"
+                
+                <DataGridTextColumn Width="3*"
+                                    Binding="{Binding Title}"
                                     Header="New Filename" />
+                
                 <DataGridTextColumn Width="1*"
-                                    Binding="{Binding BookData.Current.Author}"
+                                    Binding="{Binding Author}"
                                     Header="Author" />
+                
             </DataGrid.Columns>
 
         </DataGrid>
@@ -69,6 +81,7 @@
 
             <Button Width="100"
                     Height="30"
+                    Command="{Binding SaveCommand}"
                     Content="Save" />
 
             <Button Width="100"
@@ -79,4 +92,5 @@
         </StackPanel>
 
     </Grid>
+    
 </Controls:MetroWindow>

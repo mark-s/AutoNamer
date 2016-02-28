@@ -1,7 +1,8 @@
 ﻿using System.Windows;
+using AutoNamer.Core;
 using AutoNamer.Epub;
 using AutoNamer.IO;
-using AutoNamer.UI.ViewModel;
+using AutoNamer.UI.Helpers;
 using GalaSoft.MvvmLight.Ioc;
 
 namespace AutoNamer.UI
@@ -13,9 +14,12 @@ namespace AutoNamer.UI
     {
         public App()
         {
-            SimpleIoc.Default.Register<IFileHelpers, FileHelpers>();
-            SimpleIoc.Default.Register<IFolderUtils, FolderUtils>();
-            SimpleIoc.Default.Register<IBookDetailsProvider, EpubDetailsProvider>();
+
+            
+            SimpleIoc.Default.Register<IDialogHelpers, DialogHelpers>();
+            SimpleIoc.Default.Register<IFileListService, FileListService>();
+            SimpleIoc.Default.Register<IBookDataService, EpubDetailsProvider>();
+            SimpleIoc.Default.Register<IFileNameService, FileNameService>();
             
         }
     }

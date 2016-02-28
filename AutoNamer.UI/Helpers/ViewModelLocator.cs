@@ -12,10 +12,11 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using AutoNamer.UI.ViewModel;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 
-namespace AutoNamer.UI.ViewModel
+namespace AutoNamer.UI.Helpers
 {
     /// <summary>
     /// This class contains static references to all the view models in the

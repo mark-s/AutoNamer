@@ -1,6 +1,0 @@
-﻿<.*title>(.*)</.*title>
-
-<.*creator.*>(.*)</.*creator>
-
-file-as="(.*)"
-

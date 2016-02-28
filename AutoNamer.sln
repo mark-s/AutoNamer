@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNamer.UI", "AutoNamer.UI\AutoNamer.UI.csproj", "{450FDF16-CEB0-4CA3-9588-D5FE3029572D}"
 EndProject
@@ -9,11 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNamer.Epub", "AutoNamer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNamer.IO", "AutoNamer.IO\AutoNamer.IO.csproj", "{C50741D6-0247-4E3E-A127-F14637EAC122}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNamer.Entities", "AutoNamer.Entities\AutoNamer.Entities.csproj", "{4194D9AF-9582-4859-B196-D2A92E144356}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNamer.IO.Tests", "AutoNamer.IO.Tests\AutoNamer.IO.Tests.csproj", "{DB2546B0-2AD7-4AFC-B9F2-DC2B0B93B384}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNamer.Epub.Tests", "AutoNamer.Epub.Tests\AutoNamer.Epub.Tests.csproj", "{BFB447E1-0A9C-46F4-8A3D-BC51F2158160}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNamer.Core", "AutoNamer.Core\AutoNamer.Core.csproj", "{9D0296FD-4A47-4B31-9900-431E03D8DFD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,17 +33,16 @@ Global
 		{C50741D6-0247-4E3E-A127-F14637EAC122}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C50741D6-0247-4E3E-A127-F14637EAC122}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C50741D6-0247-4E3E-A127-F14637EAC122}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4194D9AF-9582-4859-B196-D2A92E144356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4194D9AF-9582-4859-B196-D2A92E144356}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4194D9AF-9582-4859-B196-D2A92E144356}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{4194D9AF-9582-4859-B196-D2A92E144356}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4194D9AF-9582-4859-B196-D2A92E144356}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DB2546B0-2AD7-4AFC-B9F2-DC2B0B93B384}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DB2546B0-2AD7-4AFC-B9F2-DC2B0B93B384}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB2546B0-2AD7-4AFC-B9F2-DC2B0B93B384}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFB447E1-0A9C-46F4-8A3D-BC51F2158160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BFB447E1-0A9C-46F4-8A3D-BC51F2158160}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFB447E1-0A9C-46F4-8A3D-BC51F2158160}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D0296FD-4A47-4B31-9900-431E03D8DFD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D0296FD-4A47-4B31-9900-431E03D8DFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D0296FD-4A47-4B31-9900-431E03D8DFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D0296FD-4A47-4B31-9900-431E03D8DFD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
