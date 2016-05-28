@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Forms;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Windows.Input;
 using AutoNamer.Core;
 using AutoNamer.IO;
@@ -38,13 +38,13 @@ namespace AutoNamer.UI.ViewModel
 
             Books = new ObservableCollection<Book>();
 
-            ShowFolderChoice = new RelayCommand(HandleFolderChoice, () => true);
+            ShowFolderChoice = new RelayCommand(ChoseFolder, () => true);
 
             SaveCommand = new SaveCommand(Books, fileNameService);
 
         }
 
-        private void HandleFolderChoice()
+        private void ChoseFolder()
         {
             // Show the open folder dialog
             var selectedFolder = _dialogHelpers.GetFolderChoice();
@@ -55,21 +55,16 @@ namespace AutoNamer.UI.ViewModel
                  PopulateBooks(selectedFolder);
         }
 
-        private async void PopulateBooks(string selectedFolder)
+        private  void PopulateBooks(string selectedFolder)
         {
             // TODO: Get user choice for sub folders
 
             Books.Clear();
 
-            if (_bookDataService != null)
-            {
-                var bookDataItems = await _bookDataService.GetBooksFromFolder(selectedFolder, true);
-                foreach (var bookData in bookDataItems)
-                {
-                    Books.Add(new Book(bookData));
-                }
+            var observable = _bookDataService.GetBooksFromFolder(selectedFolder, true).ToObservable();
+            observable.Subscribe(new AnonymousObserver<BookData>(x => Books.Add(new Book(x))));
+            
 
-            }
         }
     }
 }

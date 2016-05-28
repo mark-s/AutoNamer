@@ -11,7 +11,7 @@ namespace AutoNamer.IO
         {
             var searchOption = includeSubDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
 
-            foreach (var file in Directory.GetFiles(path, fileExtension, searchOption))
+            foreach (var file in Directory.EnumerateFileSystemEntries(path, fileExtension, searchOption))
             {
                 var filePath = Path.GetDirectoryName(file);
                 var fileName = Path.GetFileNameWithoutExtension(file);

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNamer.UI", "AutoNamer.UI\AutoNamer.UI.csproj", "{450FDF16-CEB0-4CA3-9588-D5FE3029572D}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNamer.Epub.Tests", "AutoNamer.Epub.Tests\AutoNamer.Epub.Tests.csproj", "{BFB447E1-0A9C-46F4-8A3D-BC51F2158160}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNamer.Core", "AutoNamer.Core\AutoNamer.Core.csproj", "{9D0296FD-4A47-4B31-9900-431E03D8DFD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoNamer.Lookup.Google", "AutoNamer.Lookup.Google\AutoNamer.Lookup.Google.csproj", "{A2BA425E-4D45-404C-B0E2-16A6C5CD6B22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{9D0296FD-4A47-4B31-9900-431E03D8DFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D0296FD-4A47-4B31-9900-431E03D8DFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D0296FD-4A47-4B31-9900-431E03D8DFD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2BA425E-4D45-404C-B0E2-16A6C5CD6B22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2BA425E-4D45-404C-B0E2-16A6C5CD6B22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2BA425E-4D45-404C-B0E2-16A6C5CD6B22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2BA425E-4D45-404C-B0E2-16A6C5CD6B22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,7 +8,7 @@ namespace AutoNamer.Core
 
          string FileTypeIHandle { get;  }
 
-        Task<IList<BookData>> GetBooksFromFolder(string path, bool includeSubDirectories);
+        IEnumerable<BookData> GetBooksFromFolder(string path, bool includeSubDirectories);
 
 
     }

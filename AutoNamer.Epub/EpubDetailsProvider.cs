@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoNamer.Core;
 using AutoNamer.IO;
@@ -23,7 +24,7 @@ namespace AutoNamer.Epub
 
         public string FileTypeIHandle => "*.epub";
 
-        
+
 
         public EpubDetailsProvider(IFileListService fileListService)
         {
@@ -33,17 +34,14 @@ namespace AutoNamer.Epub
         }
 
 
-        public async Task<IList<BookData>> GetBooksFromFolder(string path, bool includeSubDirectories)
+        public IEnumerable<BookData> GetBooksFromFolder(string path, bool includeSubDirectories)
         {
-
-            var items = new List<BookData>();
 
             foreach (var bookFileData in _fileListService.GetBooksFromFolder(path, FileTypeIHandle, includeSubDirectories))
             {
-                items.Add(new BookData(bookFileData, await GetBookSpineData(bookFileData.FullPathAndFileName)));
+                yield return new BookData(bookFileData, GetBookSpineData(bookFileData.FullPathAndFileName));
             }
 
-            return items;
         }
 
 
@@ -51,28 +49,32 @@ namespace AutoNamer.Epub
 
 
 
-        private async Task<SpineData> GetBookSpineData(string fullFileName)
+        private SpineData GetBookSpineData(string fullFileName)
         {
             SpineData bookData;
 
-            var opfFileText = await GetOPFFileContents(fullFileName);
+            var opfFileText = GetOPFFileContents(fullFileName);
 
-            if (string.IsNullOrEmpty(opfFileText) == false)
+            if (string.IsNullOrEmpty(opfFileText))
             {
-                var title = await GetTitle(opfFileText);
-                var author = await GetAuthor(opfFileText);
-                bookData = new SpineData(title, author);
+                bookData = new SpineData("Unknown", "Unknown");
             }
             else
             {
-                bookData = new SpineData("Unknown", "Unknown");
+                var titleTast = Task.Factory.StartNew(() => GetTitle(opfFileText));
+                var authorTast = Task.Factory.StartNew(() => GetAuthor(opfFileText));
+
+                var title = titleTast.Result;
+                var author = authorTast.Result;
+
+                bookData = new SpineData(title, author);
             }
 
             return bookData;
         }
 
 
-        private async Task<string> GetOPFFileContents(string fullFileName)
+        private string GetOPFFileContents(string fullFileName)
         {
             string fileContents = "";
 
@@ -80,13 +82,13 @@ namespace AutoNamer.Epub
             {
                 using (var archive = ZipFile.Open(fullFileName, ZipArchiveMode.Read))
                 {
-                    Debug.WriteLine(fullFileName);
+
                     var theOpfFile = archive.Entries.FirstOrDefault(entry => entry.FullName.EndsWith(".opf", StringComparison.OrdinalIgnoreCase));
 
                     if (theOpfFile != null)
                         using (var reader = new StreamReader(theOpfFile.Open()))
                         {
-                            fileContents += await reader.ReadToEndAsync();
+                            fileContents = reader.ReadToEnd();
                         }
                 }
             }
@@ -98,28 +100,22 @@ namespace AutoNamer.Epub
             return fileContents;
         }
 
-        private async Task<string> GetAuthor(string opfText)
+        private string GetAuthor(string opfText)
         {
-            return await Task<string>.Factory.StartNew(() =>
-            {
-                var authorMatch = _regexAuthor.Match(opfText);
-                if (authorMatch.Success)
-                    return authorMatch.Groups[1].Value;
-                else
-                    return string.Empty;
-            });
+            var authorMatch = _regexAuthor.Match(opfText);
+            if (authorMatch.Success)
+                return authorMatch.Groups[1].Value;
+            else
+                return string.Empty;
         }
 
-        private async Task<string> GetTitle(string opfText)
+        private string GetTitle(string opfText)
         {
-            return await Task<string>.Factory.StartNew(() =>
-            {
-                var titleMatch = _regexTitle.Match(opfText);
-                if (titleMatch.Success)
-                    return titleMatch.Groups[1].Value;
-                else
-                    return string.Empty;
-            });
+            var titleMatch = _regexTitle.Match(opfText);
+            if (titleMatch.Success)
+                return titleMatch.Groups[1].Value;
+            else
+                return string.Empty;
         }
 
 

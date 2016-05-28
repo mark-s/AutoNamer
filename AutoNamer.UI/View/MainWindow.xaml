@@ -7,8 +7,7 @@
                       Height="543"
                       BorderBrush="{DynamicResource AccentColorBrush}"
                       BorderThickness="1"
-                      DataContext="{Binding Main,
-                      Source={StaticResource Locator}}"
+                      DataContext="{Binding Main, Source={StaticResource Locator}}"
                       ResizeMode="CanResizeWithGrip"
                       SaveWindowPosition="True"
                       SnapsToDevicePixels="True"
@@ -48,20 +47,20 @@
             <DataGrid.Columns>
                 
                 <DataGridCheckBoxColumn Binding="{Binding Selected}">
-                    <DataGridCheckBoxColumn.CellStyle>
-                        <Style TargetType="{x:Type DataGridCell}">
+                    <DataGridCheckBoxColumn.ElementStyle>
+                        <Style TargetType="{x:Type CheckBox}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=SavedOk}" Value="True">
                                 <Setter Property="Background" Value="LawnGreen" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </DataGridCheckBoxColumn.CellStyle>
+                    </DataGridCheckBoxColumn.ElementStyle>
                 </DataGridCheckBoxColumn>
 
                 <DataGridTextColumn Width="2*"
-                                    Binding="{Binding FileName, Mode=OneTime}"
-                                    Header="Filename" />
+                                    Binding="{Binding FileName, Mode=OneWay}"
+                                    Header="Current Filename" />
                 
                 <DataGridTextColumn Width="3*"
                                     Binding="{Binding Title}"
