@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using AutoNamer.Core;
-
+using System.IO;
 
 namespace AutoNamer.IO
 {
     public interface IFileListService
     {
-        IEnumerable<BookFileData> GetBooksFromFolder(string path, string fileExtension, bool includeSubDirectories);
+        IEnumerable<FileInfo> GetFileList(string path, string fileExtension, bool includeSubDirectories);
     }
 }

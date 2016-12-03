@@ -1,123 +1,69 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading;
+using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using AutoNamer.Core;
-using AutoNamer.IO;
 
 namespace AutoNamer.Epub
 {
     public class EpubDetailsProvider : IBookDataService
     {
-        private readonly IFileListService _fileListService;
-
-        // TODO: Regex may or may not be the fastest way of doing this ...
-        private readonly Regex _regexAuthor;
-        private readonly Regex _regexTitle;
-        private const string AUTHOR = @"<.{0,30}:creator.{0,150}>(.+)<\/.{0,10}:creator>";
-        private const string TITLE = @"<.{0,30}:title.{0,30}>(.+)<\/.{0,30}:title>";
-
+        private readonly ISectionParser _sectionParser;
         public string FileTypeIHandle => "*.epub";
+        public ISubject<IBook> Books { get; } = new Subject<IBook>();
 
-
-
-        public EpubDetailsProvider(IFileListService fileListService)
+        public EpubDetailsProvider(ISectionParser sectionParser)
         {
-            _fileListService = fileListService;
-            _regexAuthor = new Regex(AUTHOR, RegexOptions.IgnoreCase | RegexOptions.Compiled, TimeSpan.FromSeconds(1));
-            _regexTitle = new Regex(TITLE, RegexOptions.IgnoreCase | RegexOptions.Compiled, TimeSpan.FromSeconds(1));
+            _sectionParser = sectionParser;
         }
 
+        
+        private static bool FilterOpfFileName(ZipArchiveEntry entry)
+            => entry.FullName.EndsWith(".opf", StringComparison.OrdinalIgnoreCase);
 
-        public IEnumerable<BookData> GetBooksFromFolder(string path, bool includeSubDirectories)
+        public void ParseBooks(IObservable<FileInfo> fileList)
+            => fileList.Subscribe(async f => Books.OnNext(await GetBookDetailsAsync(f)));
+
+        private async Task<IBook> GetBookDetailsAsync(FileInfo file)
         {
-
-            foreach (var bookFileData in _fileListService.GetBooksFromFolder(path, FileTypeIHandle, includeSubDirectories))
-            {
-                yield return new BookData(bookFileData, GetBookSpineData(bookFileData.FullPathAndFileName));
-            }
-
-        }
-
-
-
-
-
-
-        private SpineData GetBookSpineData(string fullFileName)
-        {
-            SpineData bookData;
-
-            var opfFileText = GetOPFFileContents(fullFileName);
+            var opfFileText = await GetOpfFileContentsAsync(file.FullName);
 
             if (string.IsNullOrEmpty(opfFileText))
-            {
-                bookData = new SpineData("Unknown", "Unknown");
-            }
-            else
-            {
-                var titleTast = Task.Factory.StartNew(() => GetTitle(opfFileText));
-                var authorTast = Task.Factory.StartNew(() => GetAuthor(opfFileText));
+                return new RenameableBook(file, new SpineData("Unknown", "Unknown"));
 
-                var title = titleTast.Result;
-                var author = authorTast.Result;
+            var title = _sectionParser.GetTitle(opfFileText);
+            var author = _sectionParser.GetAuthor(opfFileText);
 
-                bookData = new SpineData(title, author);
-            }
-
-            return bookData;
+            return new RenameableBook(file, new SpineData(title, author));
         }
-
-
-        private string GetOPFFileContents(string fullFileName)
+        
+        private async Task<string> GetOpfFileContentsAsync(string fullFileName)
         {
-            string fileContents = "";
+            var fileContents = "";
 
             try
             {
-                using (var archive = ZipFile.Open(fullFileName, ZipArchiveMode.Read))
+                using (var archive = ZipFile.OpenRead(fullFileName))
                 {
-
-                    var theOpfFile = archive.Entries.FirstOrDefault(entry => entry.FullName.EndsWith(".opf", StringComparison.OrdinalIgnoreCase));
+                    var theOpfFile = archive.Entries.FirstOrDefault(FilterOpfFileName);
 
                     if (theOpfFile != null)
                         using (var reader = new StreamReader(theOpfFile.Open()))
                         {
-                            fileContents = reader.ReadToEnd();
+                            fileContents = await reader.ReadToEndAsync();
                         }
                 }
             }
-            catch (InvalidDataException ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
 
             return fileContents;
         }
-
-        private string GetAuthor(string opfText)
-        {
-            var authorMatch = _regexAuthor.Match(opfText);
-            if (authorMatch.Success)
-                return authorMatch.Groups[1].Value;
-            else
-                return string.Empty;
-        }
-
-        private string GetTitle(string opfText)
-        {
-            var titleMatch = _regexTitle.Match(opfText);
-            if (titleMatch.Success)
-                return titleMatch.Groups[1].Value;
-            else
-                return string.Empty;
-        }
-
 
     }
 }

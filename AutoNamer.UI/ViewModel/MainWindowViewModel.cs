@@ -1,15 +1,17 @@
+using System;
 using System.Collections.ObjectModel;
-using System.Reactive;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Threading;
 using System.Windows.Input;
 using AutoNamer.Core;
+using AutoNamer.Epub;
 using AutoNamer.IO;
 using AutoNamer.UI.Commands;
 using AutoNamer.UI.Helpers;
 using AutoNamer.UI.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using GalaSoft.MvvmLight.Ioc;
 using PropertyChanged;
 
 namespace AutoNamer.UI.ViewModel
@@ -18,30 +20,21 @@ namespace AutoNamer.UI.ViewModel
     [ImplementPropertyChanged]
     public class MainWindowViewModel : ViewModelBase
     {
-        private readonly IBookDataService _bookDataService;
         private readonly IDialogHelpers _dialogHelpers;
+        private readonly IFileListService _fileListService;
 
-        public RelayCommand ShowFolderChoice { get; private set; }
+        public RelayCommand ShowFolderChoiceCommand { get; private set; }
         public ICommand SaveCommand { get; private set; }
 
-        
+        public ObservableCollection<BookModel> Books { get; } = new ObservableCollection<BookModel>();
 
-        public ObservableCollection<Book> Books { get; }
-
-        public MainWindowViewModel(IBookDataService bookDataService, IDialogHelpers dialogHelpers, IFileNameService fileNameService)
+        public MainWindowViewModel(IDialogHelpers dialogHelpers, IFileNameService fileNameService, IFileListService fileListService)
         {
-
-            SimpleIoc.Default.Register<MainWindowViewModel>();
-
-            _bookDataService = bookDataService;
             _dialogHelpers = dialogHelpers;
+            _fileListService = fileListService;
 
-            Books = new ObservableCollection<Book>();
-
-            ShowFolderChoice = new RelayCommand(ChoseFolder, () => true);
-
+            ShowFolderChoiceCommand = new RelayCommand(ChoseFolder);
             SaveCommand = new SaveCommand(Books, fileNameService);
-
         }
 
         private void ChoseFolder()
@@ -49,22 +42,34 @@ namespace AutoNamer.UI.ViewModel
             // Show the open folder dialog
             var selectedFolder = _dialogHelpers.GetFolderChoice();
 
-            if (string.IsNullOrEmpty(selectedFolder))
-                return;
-            else
-                 PopulateBooks(selectedFolder);
+            if (string.IsNullOrEmpty(selectedFolder)) return;
+
+            PopulateBooks(selectedFolder);
+
         }
 
-        private  void PopulateBooks(string selectedFolder)
+        private void PopulateBooks(string selectedFolder)
         {
             // TODO: Get user choice for sub folders
 
             Books.Clear();
 
-            var observable = _bookDataService.GetBooksFromFolder(selectedFolder, true).ToObservable();
-            observable.Subscribe(new AnonymousObserver<BookData>(x => Books.Add(new Book(x))));
-            
+            var bookDetailsProvider = new EpubDetailsProvider(new EpubSectionParser());
 
+
+            var observableFileList = _fileListService.GetFileList(selectedFolder, bookDetailsProvider.FileTypeIHandle, true)
+                                                .ToObservable(Scheduler.Default);
+
+            bookDetailsProvider.Books.ObserveOn(SynchronizationContext.Current)
+                                              .Subscribe(MakeModel);
+
+            bookDetailsProvider.ParseBooks(observableFileList);
+
+        }
+
+        private void MakeModel(IBook book)
+        {
+            Books.Add(new BookModel(book));
         }
     }
 }

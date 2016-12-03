@@ -1,25 +1,43 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using AutoNamer.Core;
+
 
 namespace AutoNamer.IO
 {
     public class FileNameService : IFileNameService
     {
-        public BookData RenameFile(BookData bookData)
+        private readonly IFileNameValidator _fileNameValidator;
+
+        public FileNameService(IFileNameValidator fileNameValidator)
         {
-            // TODO: Validation here!
-            var oldFullPath = bookData.FileData.FullPathAndFileName;
-            var extension = Path.GetExtension(oldFullPath);
+            _fileNameValidator = fileNameValidator;
+        }
 
-            var newFileName = Path.ChangeExtension(bookData.Spine.Title, extension);
-            var newFullPath = Path.Combine(bookData.FileData.FullPath, newFileName);
+        public IRenameResult RenameFile(IBook book, Func<IBook,string> renamer)
+        {
+            IRenameResult result;
 
+            var newFileNameAndExtension = renamer(book);
+            if (_fileNameValidator.IsValidFileName(newFileNameAndExtension) == false)
+                return new RenameFailure(book, "new FileName Is Invalid!");
+            
+            try
+            {
+                var newFullName = Path.Combine(book.File.DirectoryName, newFileNameAndExtension);
+                File.Move(book.File.FullName, newFullName);
+                result = new RenameSuccess(book);
 
-            // TODO: ERROR HANDLING!!
-            File.Move(oldFullPath, newFullPath);
+                book.Name.SaveNew();
+            }
+            catch (Exception ex)
+            {
+                result = new RenameFailure(book, ex.Message);
+            }
 
-            return new BookData(new BookFileData(bookData.FileData.FullPath, newFileName, newFullPath), bookData.Spine);
+            return result;
 
         }
+
     }
 }

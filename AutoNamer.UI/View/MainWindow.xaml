@@ -1,17 +1,18 @@
-﻿<Controls:MetroWindow x:Class="AutoNamer.UI.View.MainWindow"
+﻿<controls:MetroWindow x:Class="AutoNamer.UI.View.MainWindow"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Title="ePub Auto Namer"
                       Width="720"
                       Height="543"
                       BorderBrush="{DynamicResource AccentColorBrush}"
                       BorderThickness="1"
-                      DataContext="{Binding Main, Source={StaticResource Locator}}"
+                      DataContext="{Binding Main,
+                                            Source={StaticResource Locator}}"
                       ResizeMode="CanResizeWithGrip"
                       SaveWindowPosition="True"
                       SnapsToDevicePixels="True"
-                      TitleCaps="False"
+                      TitleCharacterCasing="Normal"
                       UseLayoutRounding="True">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -26,11 +27,10 @@
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
 
-            <Button
-                Height="30"
-                Margin="10,0,0,0"
-                Command="{Binding ShowFolderChoice}"
-                Content="Select Folder" />
+            <Button Height="30"
+                    Margin="10,0,0,0"
+                    Command="{Binding ShowFolderChoiceCommand}"
+                    Content="Select Folder" />
 
 
         </StackPanel>
@@ -43,15 +43,15 @@
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding Books}"
                   SelectionMode="Extended">
-            
+
             <DataGrid.Columns>
-                
-                <DataGridCheckBoxColumn Binding="{Binding Selected}">
+
+                <DataGridCheckBoxColumn Binding="{Binding IsSelected}">
                     <DataGridCheckBoxColumn.ElementStyle>
                         <Style TargetType="{x:Type CheckBox}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=SavedOk}" Value="True">
-                                <Setter Property="Background" Value="LawnGreen" />
+                                    <Setter Property="Background" Value="LawnGreen" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -59,17 +59,18 @@
                 </DataGridCheckBoxColumn>
 
                 <DataGridTextColumn Width="2*"
-                                    Binding="{Binding FileName, Mode=OneWay}"
+                                    Binding="{Binding FileName.CurrentName,
+                                                      Mode=OneWay}"
                                     Header="Current Filename" />
-                
+
                 <DataGridTextColumn Width="3*"
-                                    Binding="{Binding Title}"
+                                    Binding="{Binding FileName.NewName}"
                                     Header="New Filename" />
-                
+
                 <DataGridTextColumn Width="1*"
                                     Binding="{Binding Author}"
                                     Header="Author" />
-                
+
             </DataGrid.Columns>
 
         </DataGrid>
@@ -91,5 +92,5 @@
         </StackPanel>
 
     </Grid>
-    
-</Controls:MetroWindow>
+
+</controls:MetroWindow>

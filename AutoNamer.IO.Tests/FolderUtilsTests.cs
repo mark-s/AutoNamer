@@ -26,7 +26,7 @@
 //            // Arrange
             
 //            // Act
-//            var books = _fileListService.GetBooksFromFolder(GOOD_FOLDER);
+//            var books = _fileListService.GetFileList(GOOD_FOLDER);
 
 //            // Assert
 //            books.Count.Should().Be(2);
@@ -39,7 +39,7 @@
 //            // Arrange
 
 //            // Act
-//            var books = _fileListService.GetBooksFromFolder(GOOD_FOLDER);
+//            var books = _fileListService.GetFileList(GOOD_FOLDER);
 
 //            // Assert
 //            var firstBook = books.First();
@@ -53,7 +53,7 @@
 //            // Arrange
 
 //            // Act
-//            var books = _fileListService.GetBooksFromFolder(GOOD_FOLDER);
+//            var books = _fileListService.GetFileList(GOOD_FOLDER);
 
 //            // Assert
 //            var firstBook = books.First();
@@ -67,7 +67,7 @@
 //            // Arrange
 
 //            // Act
-//            var books = _fileListService.GetBooksFromFolder(GOOD_FOLDER);
+//            var books = _fileListService.GetFileList(GOOD_FOLDER);
 
 //            // Assert
 //            var firstBook = books.First();
@@ -82,7 +82,7 @@
 //            // Arrange
 
 //            // Act
-//            var books = _fileListService.GetBooksFromFolder(GOOD_FOLDER);
+//            var books = _fileListService.GetFileList(GOOD_FOLDER);
 
 //            // Assert
 //            var book = books[1];

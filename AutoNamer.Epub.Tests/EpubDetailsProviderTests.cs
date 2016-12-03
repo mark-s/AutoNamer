@@ -18,7 +18,7 @@
 //        [Test]
 //        public async void GetBookData_GoodBook_ReturnsAuthor()
 //        {
-//             var bookData = await _epubDetailsProvider.GetBookSpineData("pg11.epub");
+//             var bookData = await _epubDetailsProvider.GetBookSpineDataAsync("pg11.epub");
 
 //             bookData.Current.Author.Should().Be("Lewis Carroll");
 
@@ -28,7 +28,7 @@
 //        [Test]
 //        public async void GetBookData_GoodBook_ReturnsTitle()
 //        {
-//            var bookData = await _epubDetailsProvider.GetBookSpineData("pg11.epub");
+//            var bookData = await _epubDetailsProvider.GetBookSpineDataAsync("pg11.epub");
 
 //            bookData.Current.Title.Should().Be("Alice's Adventures in Wonderland");
 //        }

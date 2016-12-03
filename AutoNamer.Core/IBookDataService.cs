@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.Reactive.Subjects;
 
 namespace AutoNamer.Core
 {
     public interface IBookDataService
     {
-
          string FileTypeIHandle { get;  }
 
-        IEnumerable<BookData> GetBooksFromFolder(string path, bool includeSubDirectories);
+        ISubject<IBook> Books { get; }
 
-
+        void ParseBooks(IObservable<FileInfo> fileList);
     }
 }
