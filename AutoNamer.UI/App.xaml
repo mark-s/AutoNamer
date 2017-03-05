@@ -4,17 +4,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:d1P1="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:helpers="clr-namespace:AutoNamer.UI.Helpers"
-             xmlns:viewModel="clr-namespace:AutoNamer.UI.ViewModel"
              d1P1:Ignorable="d"
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <helpers:ViewModelLocator xmlns:vm="clr-namespace:AutoNamer.UI.ViewModel"
-                                              x:Key="Locator"
-                                              d:IsDataSource="True" />
+                    <helpers:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
                 </ResourceDictionary>
+
                 <!--  MahApps  -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
@@ -27,12 +25,9 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml" />
                 <!--  Material Design: MahApps Compatibility  -->
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Fonts.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Flyout.xaml">
-                    <vm:ViewModelLocator xmlns:vm="clr-namespace:AutoNamer.UI.ViewModel"
-                                         x:Key="Locator"
-                                         d:IsDataSource="True" />
-                </ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Flyout.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
             <!--  MahApps Brushes  -->
             <SolidColorBrush x:Key="HighlightBrush" Color="{DynamicResource Primary700}" />
             <SolidColorBrush x:Key="AccentColorBrush" Color="{DynamicResource Primary500}" />

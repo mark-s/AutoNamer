@@ -1,4 +1,5 @@
-﻿using AutoNamer.Core;
+﻿using System;
+using AutoNamer.Core;
 using AutoNamer.IO;
 using PropertyChanged;
 
@@ -23,11 +24,11 @@ namespace AutoNamer.UI.Model
 
         public IRenameResult RenameResult { get; set; }
 
-        public BookModel(IBook book)
+        public BookModel(IBook book, Func<IBook, string> titleMaker)
         {
             Book = book;
             FileName = book.Name;
-            FileName.NewName = Title;
+            FileName.NewName = titleMaker(book);
         }
 
     }

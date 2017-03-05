@@ -39,7 +39,6 @@ namespace AutoNamer.Core
         public BookFileName(string currentName)
         {
             CurrentName = currentName;
-            _newName = currentName;
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) 

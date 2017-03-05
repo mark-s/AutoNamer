@@ -61,15 +61,16 @@ namespace AutoNamer.UI.ViewModel
                                                 .ToObservable(Scheduler.Default);
 
             bookDetailsProvider.Books.ObserveOn(SynchronizationContext.Current)
-                                              .Subscribe(MakeModel);
+                                              .Subscribe(book => Books.Add(new BookModel(book, DefaultNameMaker)));
 
             bookDetailsProvider.ParseBooks(observableFileList);
 
         }
 
-        private void MakeModel(IBook book)
+        private string DefaultNameMaker(IBook book)
         {
-            Books.Add(new BookModel(book));
+            // TODO: strip out bad characters and check length etc
+            return book.Spine.Title;
         }
     }
 }
